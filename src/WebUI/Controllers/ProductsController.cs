@@ -17,6 +17,7 @@ namespace WebUI.Controllers
     {
         //FIXME: replace to Unit of Work
         private ShopContext db = new ShopContext();
+
         private readonly IUnitOfWork _unitOfWork;
 
 

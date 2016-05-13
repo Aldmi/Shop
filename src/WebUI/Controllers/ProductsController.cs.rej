@@ -1,0 +1,9 @@
+diff a/src/WebUI/Controllers/ProductsController.cs b/src/WebUI/Controllers/ProductsController.cs	(rejected hunks)
+@@ -17,7 +17,6 @@
+     {
+         //FIXME: replace to Unit of Work
+         private ShopContext db = new ShopContext();
+-
+         private readonly IUnitOfWork _unitOfWork;
+ 
+ 
