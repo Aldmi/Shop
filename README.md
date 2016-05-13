@@ -1,4 +1,2 @@
 # Shop
-Интернет магазин
-
-gfddddg
+Example of internet shop

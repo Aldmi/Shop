@@ -1,0 +1,7 @@
+﻿@model Domain.Cart
+
+<div class="navbar-text navbar-right">
+    <b>@Html.ActionLink("Ваша корзина", "Index", "Cart")</b>
+    @Model.GetTotalAmount() руб.
+</div>
+

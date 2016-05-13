@@ -1,0 +1,45 @@
+﻿@model Domain.Cart
+
+@{
+    ViewBag.Title = "View";
+}
+
+<table class="table">
+    
+    @if (Model == null || !Model.Lines.Any())
+    {
+        <div>
+            Корзина пуста
+        </div>
+    }
+    else
+    {
+        <tr>
+            <th>
+                Продукт
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Количество
+            </th>
+        </tr>
+
+        foreach (var item in Model.Lines)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(line => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(line => item.Product.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(line => item.Quantity)
+            </td>
+       </tr>
+        }
+    }
+
+</table>
