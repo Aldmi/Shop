@@ -18,16 +18,18 @@ namespace WebUI.Controllers
         //FIXME: replace to Unit of Work
         private ShopContext db = new ShopContext();
 
+        private readonly IUnitOfWork _unitOfWork;
+
 
         public ProductsController(IUnitOfWork unitOfWork)
         {
-            
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Products
         public async Task<ActionResult> Index()
         {
-            return View(await db.Products.ToListAsync());
+            return View(await _unitOfWork.Products.Get().Where(p => true).ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -37,7 +39,7 @@ namespace WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product = await db.Products.FindAsync(id);  //_unitOfWork.Products.Get(id)
             if (product == null)
             {
                 return HttpNotFound();
@@ -60,8 +62,9 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                await db.SaveChangesAsync();
+                _unitOfWork.Products.Insert(product);
+                await _unitOfWork.Save();
+
                 return RedirectToAction("Index");
             }
 

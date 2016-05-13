@@ -13,6 +13,6 @@ namespace Domain.Services
 
         // TODO: add reps
 
-		void Save();
+		Task<int> Save();
 	}
 }

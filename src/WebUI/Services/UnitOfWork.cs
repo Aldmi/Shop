@@ -23,9 +23,9 @@ namespace WebUI.Services
 
 		public IRepository<Product> Products { get; private set; }
 
-		public void Save()
+		public async Task<int> Save()
 		{
-			_context.SaveChanges();
+             return await _context.SaveChangesAsync();
 		}
 
 		public void Dispose()
