@@ -23,7 +23,7 @@ namespace UnitTests
 			Assert.AreEqual(100.0m * 2 + 150.5m * 3, cart.GetTotalAmount());			
 		}
 
-
-		// TODO: other tests
+         
+		// TODO: other tests 1
 	}
 }
