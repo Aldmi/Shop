@@ -20,8 +20,6 @@ namespace WebUI.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public string Name { get; set; } //TEST gitHub
-
 
         public ProductsController(IUnitOfWork unitOfWork)
         {
