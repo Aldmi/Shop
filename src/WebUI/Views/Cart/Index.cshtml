@@ -28,17 +28,17 @@ else
             </th>
         </tr>
 
-        foreach (var item in Model.Lines)
+        @foreach (var line in @Model.Lines)
         {
         <tr>
             <td>
-                @Html.DisplayFor(line => item.Product.Name)
+                @Html.DisplayFor(item => line.Product.Name)
             </td>
             <td>
-                @Html.DisplayFor(line => item.Product.UnitPrice)
+                @Html.DisplayFor(item => line.Product.UnitPrice)
             </td>
             <td>
-                @Html.DisplayFor(line => item.Quantity)
+                @Html.DisplayFor(item => line.Quantity)
             </td>
         </tr>
         }
