@@ -1,19 +1,21 @@
-﻿@model Domain.Cart
+﻿@using System.Linq
+@model Domain.Entities.Cart
 
 @{
     ViewBag.Title = "View";
 }
 
-<table class="table">
+
     
-    @if (Model == null || !Model.Lines.Any())
-    {
-        <div>
-            Корзина пуста
-        </div>
-    }
-    else
-    {
+@if (Model == null || !Model.Lines.Any())
+{
+    <div>
+        Корзина пуста
+    </div>
+}
+else
+{
+    <table class="table">
         <tr>
             <th>
                 Продукт
@@ -38,8 +40,9 @@
             <td>
                 @Html.DisplayFor(line => item.Quantity)
             </td>
-       </tr>
+        </tr>
         }
-    }
+    </table>
+}
 
-</table>
+        

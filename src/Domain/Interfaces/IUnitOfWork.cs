@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web.Configuration;
+using Domain.Entities;
 
-namespace Domain.Services
+namespace Domain.Interfaces
 {
-	public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
 	{
 		IRepository<Product> Products { get; }
 

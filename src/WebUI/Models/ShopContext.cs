@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
+using Domain.Entities;
 
 namespace WebUI.Models
 {
@@ -19,6 +16,6 @@ namespace WebUI.Models
         {
         }
 
-		public DbSet<Domain.Product> Products { get; set; }
+		public DbSet<Product> Products { get; set; }
 	}
 }

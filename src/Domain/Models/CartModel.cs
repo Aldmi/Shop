@@ -1,16 +1,13 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Domain.Entities;
+using Domain.Interfaces;
 
-namespace Domain.Services
+namespace Domain.Models
 {
-	public class CartModel
+    public class CartModel
 	{
-		ICartService _cartService;
-		IUnitOfWork _unitOfWork;
+        readonly ICartService _cartService;
+        readonly IUnitOfWork _unitOfWork;
 
 		public CartModel(ICartService cartService, IUnitOfWork unitOfWork)
 		{
@@ -18,16 +15,16 @@ namespace Domain.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public void Add(int productID, int quantity)
+		public void Add(int productId, int quantity)
 		{
 			var cart = _cartService.Get();
-			var product = _unitOfWork.Products.Get(productID);
+			var product = _unitOfWork.Products.Get(productId);
 
 			cart.AddLine(product, quantity);
 			_cartService.Update(cart);
 		}
 
-		public void Remove(int productID)
+		public void Remove(int productId)
 		{
 			throw new NotImplementedException();
 		}

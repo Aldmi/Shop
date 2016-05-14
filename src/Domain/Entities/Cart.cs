@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Entities
 {
 	public class Cart
 	{
-		private List<Line> _lines = new List<Line>();
+		private readonly List<Line> _lines = new List<Line>();
 
-		public IEnumerable<Line> Lines { get { return _lines; }	}
+		public IEnumerable<Line> Lines => _lines;
 
-		public void AddLine(Product product, int quantity)
+	    public void AddLine(Product product, int quantity)
 		{
 			var existingLine = _lines
-				.Where(line => line.Product.Id == product.Id)
-				.FirstOrDefault();
+				.FirstOrDefault(line => line.Product.Id == product.Id);
 
 			if (existingLine == null)
 			{

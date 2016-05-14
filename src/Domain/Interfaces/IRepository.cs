@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Domain.Services
+namespace Domain.Interfaces
 {
 	public interface IRepository<TEntity> where TEntity : class
 	{
@@ -11,8 +11,7 @@ namespace Domain.Services
 		IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
 		
 		void Insert(TEntity entity);
-		void Update(TEntity entity);
-		
+		void Update(TEntity entity);		
 		void Remove(TEntity entity);
 
 	}

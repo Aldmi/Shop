@@ -1,5 +1,4 @@
-﻿using System;
-using Domain;
+﻿using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests

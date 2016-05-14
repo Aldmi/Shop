@@ -1,12 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Domain.Entities;
+using Domain.Interfaces;
+using Domain.Models;
 using Moq;
-using Domain.Services;
-using Domain;
-using System.Linq;
-using WebUI.Controllers;
 
 namespace UnitTests
 {
@@ -33,9 +29,7 @@ namespace UnitTests
 			var cart = new Cart();
 			mockCartService.Setup(m => m.Get()).Returns(cart);
 
-
 			var cartModel = new CartModel(mockCartService.Object, mockUnitOfWork.Object);
-
 			cartModel.Add(1, 2);
 
 			Assert.AreEqual(222, cart.GetTotalAmount());

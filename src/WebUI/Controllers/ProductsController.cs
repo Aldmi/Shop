@@ -8,7 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Domain;
-using Domain.Services;
+using Domain.Entities;
+using Domain.Interfaces;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -39,7 +40,8 @@ namespace WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);  //_unitOfWork.Products.Get(id)
+
+            var product = await db.Products.FindAsync(id);  //_unitOfWork.Products.Get(id)
             if (product == null)
             {
                 return HttpNotFound();

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Domain;
-using Domain.Services;
+﻿using System.Web.Mvc;
+using Domain.Interfaces;
+using Domain.Models;
 
 namespace WebUI.Controllers
 {
     public class CartController : Controller
     {
-		private ICartService _cartService;
-		private IUnitOfWork _unitOfWork;
+		private readonly ICartService _cartService;
+		private readonly IUnitOfWork _unitOfWork;
 
 		public CartController(ICartService cartService, IUnitOfWork unitOfWork)
 		{

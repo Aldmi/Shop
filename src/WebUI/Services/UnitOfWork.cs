@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using Domain;
-using Domain.Services;
+using Domain.Entities;
+using Domain.Interfaces;
 using WebUI.Models;
 
 namespace WebUI.Services
