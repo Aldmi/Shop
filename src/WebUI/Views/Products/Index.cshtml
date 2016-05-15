@@ -12,19 +12,17 @@
             type: "POST"
         }).done(function (data) {
             
-            alert(data.Total);
+            //alert(data.Total);           
+
             
 
-            $('#shopCartBtn').html(data.Total);
+            $('#shopCartBtn').text('В корзину (' + data.Total + ')');
 
 
         });
-    }
+    };
 
     
-    
-
-   
 </script>
 
 
@@ -38,7 +36,7 @@
     {
         <tr>
             <td>
-                <img src="@Url.Content("~/Content/Images/product_stub.png")"/>
+                <img src="@item.PictureRef"/>
             </td>
             <td>
 
@@ -64,7 +62,7 @@
                     </div>
                 }*@
 
-                <input type="button" class="btn" value="В корзину" onclick="addToCart(@item.Id)" />
+                <input type="button" class="btn btn-success" value="В корзину" onclick="addToCart(@item.Id)" />
             </td>
 
         </tr>

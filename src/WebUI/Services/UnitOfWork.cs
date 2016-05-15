@@ -13,7 +13,7 @@ namespace WebUI.Services
 {
 	public class UnitOfWork : IUnitOfWork
 	{
-		private ShopContext _context;
+		private readonly ShopContext _context;
 
 		public UnitOfWork(ShopContext context)
 		{

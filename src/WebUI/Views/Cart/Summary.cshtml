@@ -1,16 +1,7 @@
 ﻿@model Domain.Entities.Cart
 
-<script type="text/javascript">
-    $("#shopCart").load(function() {
 
-        $("#shopCartBtn").text("123");
-
-    });
-
-</script>
-
-
-<div class="navbar-text navbar-right" Id= "shopCart">
+<div class="navbar-text navbar-right">
     <a href="/Cart/Index" class="btn btn-primary" role="button" Id="shopCartBtn">Корзина (@Model.GetTotalAmount() руб.)</a>
 </div>
 

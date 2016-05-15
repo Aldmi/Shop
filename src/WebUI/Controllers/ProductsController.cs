@@ -65,32 +65,22 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Products.Insert(product);
-
-
-                foreach (var file in fileUpload)
+                var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
+                if (!Directory.Exists(path))
                 {
-                    if (file == null) continue;
-                    var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    var filename = Path.GetFileName(file.FileName);
-                    if (filename != null) file.SaveAs(Path.Combine(path, filename));
-
-                    //var newPhoto = new HomeworksPhoto
-                    //{
-                    //    Name = file.FileName,
-                    //    HomeworksPhotoPath = "/UploadedFiles/" + filename,   // Нам не нужен путь на диске! Только относительный путь на сайте
-                    //    HomeworkId = homework.Id
-                    //};
-                    //db.HomeworksPhotoList.Add(newPhoto);
+                    Directory.CreateDirectory(path);
                 }
-
-
-
+                
+                var file = fileUpload.FirstOrDefault();
+                var filename = Path.GetFileName(file?.FileName);
+                var filePath = filename != null ? Path.Combine(path, filename) : null;
+                if (filePath != null)
+                {
+                    file.SaveAs(filePath);
+                    product.PictureRef = "/UploadedFiles/" + filename;
+                }
+                
+                _unitOfWork.Products.Insert(product);
                 await _unitOfWork.Save();
 
                 return RedirectToAction("Index");

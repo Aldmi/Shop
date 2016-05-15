@@ -27,7 +27,10 @@ namespace WebUI.Controllers
 			var sale = new CartModel(_cartService, _unitOfWork);
 			sale.Add(id, 1);
 
-            return Json(new { Total = _cartService.Get().GetTotalAmount() });
+            return Json(new
+            {
+                Total = _cartService.Get().GetTotalAmount()
+            });
         }
 
 
