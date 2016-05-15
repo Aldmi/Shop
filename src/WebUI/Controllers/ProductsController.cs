@@ -17,8 +17,6 @@ namespace WebUI.Controllers
 {
     public class ProductsController : Controller
     {
-        //FIXME: replace to Unit of Work
-        private ShopContext db = new ShopContext();
 
         private readonly IUnitOfWork _unitOfWork;
 
@@ -42,7 +40,7 @@ namespace WebUI.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var product = await db.Products.FindAsync(id);  //_unitOfWork.Products.Get(id)
+            var product = await _unitOfWork.Products.GetAsync(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -57,8 +55,6 @@ namespace WebUI.Controllers
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,UnitPrice")] Product product, HttpPostedFileBase[] fileUpload)
@@ -81,7 +77,7 @@ namespace WebUI.Controllers
                 }
                 
                 _unitOfWork.Products.Insert(product);
-                await _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
 
                 return RedirectToAction("Index");
             }
@@ -98,7 +94,7 @@ namespace WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            var product = await _unitOfWork.Products.GetAsync(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -111,12 +107,29 @@ namespace WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,UnitPrice")] Product product)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,UnitPrice")] Product product, HttpPostedFileBase[] fileUpload)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                //TODO: выделить в отдельный метод загузку файла с try{} catch() обработкой,  при возникновении исключения удалять картинку с диска.
+                var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                var file = fileUpload.FirstOrDefault();
+                var filename = Path.GetFileName(file?.FileName);
+                var filePath = filename != null ? Path.Combine(path, filename) : null;
+                if (filePath != null)
+                {
+                    file.SaveAs(filePath);
+                    product.PictureRef = "/UploadedFiles/" + filename;
+                }
+
+                _unitOfWork.Products.Update(product);
+
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -129,7 +142,7 @@ namespace WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product = await _unitOfWork.Products.GetAsync(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -142,17 +155,42 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Product product = await db.Products.FindAsync(id);
-            db.Products.Remove(product);
-            await db.SaveChangesAsync();
+            Product product = await _unitOfWork.Products.GetAsync(id);
+            _unitOfWork.Products.Remove(product);
+            await _unitOfWork.SaveAsync();
+
+            if (!string.IsNullOrEmpty(product.PictureRef))
+            {
+                var filePath = AppDomain.CurrentDomain.BaseDirectory + product.PictureRef;// "D:\\Git\\Shop\\src\\WebUI\\UploadedFiles/saw.png"        
+                await DeleteFileAsync(filePath);
+            }
+
             return RedirectToAction("Index");
         }
+
+
+
+
+        #region Methods
+
+        public async Task DeleteFileAsync(string filePath)
+        {
+            if (System.IO.File.Exists(filePath))
+            {
+                await Task.Factory.StartNew(() => { System.IO.File.Delete(filePath); });
+            }
+        }
+
+        #endregion
+
+
+
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

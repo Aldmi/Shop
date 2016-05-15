@@ -15,10 +15,10 @@ namespace Domain.Models
 			_unitOfWork = unitOfWork;
 		}
 
-		public void Add(int productId, int quantity)
+		public  void Add(int productId, int quantity)
 		{
 			var cart = _cartService.Get();
-			var product = _unitOfWork.Products.Get(productId);
+			var product =  _unitOfWork.Products.Get(productId);
 
 			cart.AddLine(product, quantity);
 			_cartService.Update(cart);

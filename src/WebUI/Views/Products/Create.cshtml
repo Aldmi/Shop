@@ -35,6 +35,7 @@
             @Html.LabelFor(model => model.PictureRef, "Прикрепить фото", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBox("fileUpload", "fileUpload", htmlAttributes: new { type = "file", multiple = "multiple", @class = "btn btn-default" })
+                @*@Html.TextBoxFor(m => m.PictureRef, htmlAttributes: new { type = "file", multiple = "multiple", @class = "btn btn-default" })*@
             </div>
         </div>
 

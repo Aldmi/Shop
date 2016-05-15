@@ -10,6 +10,6 @@ namespace Domain.Interfaces
 
         // TODO: add reps
 
-		Task<int> Save();
+		Task<int> SaveAsync();
 	}
 }

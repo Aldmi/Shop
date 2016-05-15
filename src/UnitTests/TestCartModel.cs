@@ -16,16 +16,16 @@ namespace UnitTests
 		public void TestAdd()
 		{
 			var mockUnitOfWork = new Mock<IUnitOfWork>();
-			mockUnitOfWork.Setup(m => m.Products.Get(It.IsAny<int>()))
+            mockUnitOfWork.Setup(m => m.Products.Get(It.IsAny<int>()))
                 .Returns(
-			        new Product
-			        {
-			            Id = 1,
-                        UnitPrice = 111 			        
-			        }			
-			);
-            
-			var mockCartService = new Mock<ICartService>();
+                    new Product
+                    {
+                        Id = 1,
+                        UnitPrice = 111
+                    }
+            );
+
+            var mockCartService = new Mock<ICartService>();
 			var cart = new Cart();
 			mockCartService.Setup(m => m.Get()).Returns(cart);
 

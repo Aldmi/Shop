@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Domain.Interfaces;
 using WebUI.Models;
 
@@ -18,9 +19,14 @@ namespace WebUI.Services
 			DbSet = dbContext.Set<TEntity>();
 		}
 
-		public TEntity Get(int id)
+        public TEntity Get(int id)
+        {
+            return DbSet.Find(id);
+        }
+
+        public async Task<TEntity> GetAsync(int id)
 		{
-			return DbSet.Find(id);
+			return await DbSet.FindAsync(id);
 		}
 
 		public IQueryable<TEntity> Get()

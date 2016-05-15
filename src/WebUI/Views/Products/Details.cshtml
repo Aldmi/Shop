@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.Label("Картинка")
+        </dt>
+
+        <dd>
+         <img src="@Model.PictureRef" alt="Изображение" title="Картинка" />
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
