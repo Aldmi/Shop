@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -60,11 +61,36 @@ namespace WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,UnitPrice")] Product product)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,UnitPrice")] Product product, HttpPostedFileBase[] fileUpload)
         {
             if (ModelState.IsValid)
             {
                 _unitOfWork.Products.Insert(product);
+
+
+                foreach (var file in fileUpload)
+                {
+                    if (file == null) continue;
+                    var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    var filename = Path.GetFileName(file.FileName);
+                    if (filename != null) file.SaveAs(Path.Combine(path, filename));
+
+                    //var newPhoto = new HomeworksPhoto
+                    //{
+                    //    Name = file.FileName,
+                    //    HomeworksPhotoPath = "/UploadedFiles/" + filename,   // Нам не нужен путь на диске! Только относительный путь на сайте
+                    //    HomeworkId = homework.Id
+                    //};
+                    //db.HomeworksPhotoList.Add(newPhoto);
+                }
+
+
+
                 await _unitOfWork.Save();
 
                 return RedirectToAction("Index");
@@ -72,6 +98,8 @@ namespace WebUI.Controllers
 
             return View(product);
         }
+
+
 
         // GET: Products/Edit/5
         public async Task<ActionResult> Edit(int? id)

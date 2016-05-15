@@ -6,16 +6,18 @@
 }
 
 
-    
+
 @if (Model == null || !Model.Lines.Any())
 {
-    <div>
-        Корзина пуста
-    </div>
+    <div class="alert alert-info">Корзина пуста</div>
+
+    @*<div class="alert alert-success">Задача успешно завершена</div>
+        <div class="alert alert-warning">Внимание!</div>
+        <div class="alert alert-danger">Опасно!</div>*@
 }
 else
 {
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
             <th>
                 Продукт
@@ -30,19 +32,18 @@ else
 
         @foreach (var line in @Model.Lines)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(item => line.Product.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(item => line.Product.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(item => line.Quantity)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(item => line.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(item => line.Product.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(item => line.Quantity)
+                </td>
+            </tr>
         }
     </table>
 }
 
-        

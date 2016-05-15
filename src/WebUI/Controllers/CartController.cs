@@ -22,18 +22,19 @@ namespace WebUI.Controllers
         }
 
 		[HttpPost]
-		public RedirectToRouteResult Add(int productId, string returnUrl)
+		public ActionResult Add(int id)
 		{
 			var sale = new CartModel(_cartService, _unitOfWork);
-			sale.Add(productId, 1);
+			sale.Add(id, 1);
 
-			return RedirectToAction("Index", new { returnUrl });
-		}
+            return Json(new { Total = _cartService.Get().GetTotalAmount() });
+        }
 
 
 		public PartialViewResult Summary()
 		{
 			return PartialView(_cartService.Get());
 		}
+
     }
 }

@@ -14,6 +14,7 @@ namespace WebUI
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Products", action = "Index", id = UrlParameter.Optional }
 			);
-		}
+
+        }
 	}
 }

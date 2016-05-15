@@ -1,7 +1,17 @@
 ﻿@model Domain.Entities.Cart
 
-<div class="navbar-text navbar-right">
-    <b>@Html.ActionLink("Ваша корзина", "Index", "Cart")</b>
-    @Model.GetTotalAmount() руб.
+<script type="text/javascript">
+    $("#shopCart").load(function() {
+
+        $("#shopCartBtn").text("123");
+
+    });
+
+</script>
+
+
+<div class="navbar-text navbar-right" Id= "shopCart">
+    <a href="/Cart/Index" class="btn btn-primary" role="button" Id="shopCartBtn">Корзина (@Model.GetTotalAmount() руб.)</a>
 </div>
+
 
