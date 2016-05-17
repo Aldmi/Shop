@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Domain;
 using Domain.Entities;
 using Domain.Interfaces;
+using WebUI.Migrations;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -61,23 +62,42 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
-                if (!Directory.Exists(path))
+                try
                 {
-                    Directory.CreateDirectory(path);
+                    //Добавить файл на диск
+                    var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    var file = fileUpload.FirstOrDefault();
+                    var filename = Path.GetFileName(file?.FileName);
+                    var filePath = filename != null ? Path.Combine(path, filename) : null;
+                    if (filePath != null)
+                    {
+                        file.SaveAs(filePath);
+                        product.PictureRef = "/UploadedFiles/" + filename;
+                    }
+
+
+                    //Добавить в БД
+                    _unitOfWork.Products.Insert(product);
+                    await _unitOfWork.SaveAsync();
+
                 }
-                
-                var file = fileUpload.FirstOrDefault();
-                var filename = Path.GetFileName(file?.FileName);
-                var filePath = filename != null ? Path.Combine(path, filename) : null;
-                if (filePath != null)
+                catch (IOException)
                 {
-                    file.SaveAs(filePath);
-                    product.PictureRef = "/UploadedFiles/" + filename;
+                    return View(product);
                 }
-                
-                _unitOfWork.Products.Insert(product);
-                await _unitOfWork.SaveAsync();
+                catch (DataException)
+                {
+                    //Удаление файла с диска
+                    if (!string.IsNullOrEmpty(product.PictureRef))
+                    {
+                        var filePath = AppDomain.CurrentDomain.BaseDirectory + product.PictureRef;      
+                        await DeleteFileAsync(filePath);
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
@@ -111,25 +131,52 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: выделить в отдельный метод загузку файла с try{} catch() обработкой,  при возникновении исключения удалять картинку с диска.
-                var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
-                if (!Directory.Exists(path))
+                Product oldProduct = null;//_unitOfWork.Products.Get(product.Id);
+
+                try
                 {
-                    Directory.CreateDirectory(path);
+                    //Добавить файл на диск
+                    var path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles/";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    var file = fileUpload.FirstOrDefault();
+                    var filename = Path.GetFileName(file?.FileName);
+                    var filePath = filename != null ? Path.Combine(path, filename) : null;
+                    if (filePath != null)
+                    {
+                        file.SaveAs(filePath);
+                        product.PictureRef = "/UploadedFiles/" + filename;
+                    }
+
+                    //Обновить в БД
+                    _unitOfWork.Products.Update(product);
+                    await _unitOfWork.SaveAsync();
+
+                }
+                catch (IOException)
+                {
+                    return View();
+                }
+                catch (DataException)
+                {
+                    //Удаление файла с диска
+                    if (!string.IsNullOrEmpty(product.PictureRef))
+                    {
+                        var filePath = AppDomain.CurrentDomain.BaseDirectory + product.PictureRef;
+                        await DeleteFileAsync(filePath);
+                    }
+                }
+        
+                //Удаление старого  файла с диска
+                if (!string.IsNullOrEmpty(oldProduct?.PictureRef))
+                {
+                    var filePath = AppDomain.CurrentDomain.BaseDirectory + oldProduct.PictureRef;
+                    await DeleteFileAsync(filePath);
                 }
 
-                var file = fileUpload.FirstOrDefault();
-                var filename = Path.GetFileName(file?.FileName);
-                var filePath = filename != null ? Path.Combine(path, filename) : null;
-                if (filePath != null)
-                {
-                    file.SaveAs(filePath);
-                    product.PictureRef = "/UploadedFiles/" + filename;
-                }
-
-                _unitOfWork.Products.Update(product);
-
-                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -156,13 +203,28 @@ namespace WebUI.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Product product = await _unitOfWork.Products.GetAsync(id);
-            _unitOfWork.Products.Remove(product);
-            await _unitOfWork.SaveAsync();
-
-            if (!string.IsNullOrEmpty(product.PictureRef))
+            try
             {
-                var filePath = AppDomain.CurrentDomain.BaseDirectory + product.PictureRef;// "D:\\Git\\Shop\\src\\WebUI\\UploadedFiles/saw.png"        
-                await DeleteFileAsync(filePath);
+                //Удалние из БД
+                _unitOfWork.Products.Remove(product);
+                await _unitOfWork.SaveAsync();
+
+                //Удаление файла с диска
+                if (!string.IsNullOrEmpty(product.PictureRef))
+                {
+                    var filePath = AppDomain.CurrentDomain.BaseDirectory + product.PictureRef;// "D:\\Git\\Shop\\src\\WebUI\\UploadedFiles/saw.png"        
+                    await DeleteFileAsync(filePath);
+                }
+            }
+            catch (DataException)
+            {
+                return View();
+            }
+            catch (IOException)
+            {
+                //Добавить в БД
+                _unitOfWork.Products.Insert(product);
+                await _unitOfWork.SaveAsync();
             }
 
             return RedirectToAction("Index");
