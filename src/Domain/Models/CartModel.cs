@@ -26,13 +26,15 @@ namespace Domain.Models
 
 		public void Remove(int productId)
 		{
+			// TODO
 			throw new NotImplementedException();
 		}
 
 
-	    public Order MakeOrder()
+	    public Order CreateOrder()
 	    {
-	        throw new NotImplementedException();
+			// TODO
+			throw new NotImplementedException();
 	    }
 	}
 }
