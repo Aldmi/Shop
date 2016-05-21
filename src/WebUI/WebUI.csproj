@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201605150050286_PictureRef.Designer.cs">
       <DependentUpon>201605150050286_PictureRef.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605191311300_AddNameRequired.cs" />
+    <Compile Include="Migrations\201605191311300_AddNameRequired.Designer.cs">
+      <DependentUpon>201605191311300_AddNameRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ShopContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +185,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jQueryFixes.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -227,6 +232,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605150050286_PictureRef.resx">
       <DependentUpon>201605150050286_PictureRef.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605191311300_AddNameRequired.resx">
+      <DependentUpon>201605191311300_AddNameRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

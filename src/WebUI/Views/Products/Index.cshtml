@@ -10,19 +10,11 @@
         $.ajax({
             url: "/Cart/Add/" + productId,
             type: "POST"
-        }).done(function (data) {
-            
+        }).done(function (data) {            
             //alert(data.Total);           
-
-            
-
-            $('#shopCartBtn').text('В корзину (' + data.Total + ')');
-
-
+            $('#shopCartBtn').text('В корзину (' + data.Total + ') Руб.');
         });
     };
-
-    
 </script>
 
 
