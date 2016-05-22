@@ -1,8 +1,10 @@
-﻿@model System.Collections.Generic.IEnumerable<Domain.Entities.Product>
+﻿@using PagedList.Mvc;
+@using PagedList;
 
-@{
-    ViewBag.Title = "Index";
-}
+@model IPagedList<Domain.Entities.Product>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 <script type="text/javascript">
     function addToCart(productId)  {
@@ -61,6 +63,8 @@
         </li>
     }
 </ul>
-
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
 

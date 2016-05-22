@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Domain;
 using Domain.Entities;
 using Domain.Interfaces;
+using PagedList;
 using WebUI.Migrations;
 using WebUI.Models;
 using WebUI.Security;
@@ -28,9 +29,13 @@ namespace WebUI.Controllers
         }
 
         // GET: Products
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? page)
         {
-            return View(await _unitOfWork.Products.Get().Where(p => true).ToListAsync());
+            var qProduct = await _unitOfWork.Products.Get().OrderBy(p=>p.Id).ToListAsync();
+            var pageNumber = page ?? 1;
+            var onePageOfProducts = qProduct.ToPagedList(pageNumber, 2);
+
+            return View(onePageOfProducts);
         }
 
         // GET: Products/Details/5
