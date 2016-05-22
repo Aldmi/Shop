@@ -194,11 +194,15 @@
     </Compile>
     <Compile Include="Migrations\201605212134557_Security.cs" />
     <Compile Include="Migrations\201605212134557_Security.Designer.cs">
-     <DependentUpon>201605212134557_Security.cs</DependentUpon>
+      <DependentUpon>201605212134557_Security.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201605191311300_AddNameRequired.cs" />
     <Compile Include="Migrations\201605191311300_AddNameRequired.Designer.cs">
       <DependentUpon>201605191311300_AddNameRequired.cs</DependentUpon>
-
+    </Compile>
+    <Compile Include="Migrations\201605220557330_Test.cs" />
+    <Compile Include="Migrations\201605220557330_Test.Designer.cs">
+      <DependentUpon>201605220557330_Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ShopContext.cs" />
@@ -282,13 +286,14 @@
     <EmbeddedResource Include="Migrations\201605150050286_PictureRef.resx">
       <DependentUpon>201605150050286_PictureRef.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201605212134557_Security.resx">
       <DependentUpon>201605212134557_Security.cs</DependentUpon>
-
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605191311300_AddNameRequired.resx">
       <DependentUpon>201605191311300_AddNameRequired.cs</DependentUpon>
-
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605220557330_Test.resx">
+      <DependentUpon>201605220557330_Test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

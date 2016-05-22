@@ -37,11 +37,12 @@ textarea {
     display: table-cell;
     position: relative;   
     padding-right: 23px;
-    min-width: 180px;
+    /*min-width: 360px;*/
 }
 
 .item-imageblock-img {
-    height: 200px;
+    /*height: 200px;*/
+    width: 200px;
 }
 
 .item-descblock {

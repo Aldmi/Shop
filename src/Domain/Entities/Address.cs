@@ -8,6 +8,6 @@ namespace Domain.Entities
 {
 	class Address
 	{
-		// TODO: zip-code, city, streetline
+		// TODO: zip-code, city, address line
 	}
 }
