@@ -22,43 +22,45 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<table class="table table-bordered">
+
+
+<ul>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <img src="@item.PictureRef" alt="Изображение" title="Картинка"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-            </td>
+        <li class="item">
+            <div class="item-imageblock">
+                <img class="item-imageblock-img" src="@item.PictureRef" alt="Изображение" title="Картинка" />
+            </div>
+
+            <div class="item-descblock">
+                @Html.ActionLink(item.Name, "Details", new { id = item.Id }, new { @class = "item-descblock-title" })
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
 
 
-            <td>
-                @*@using (Html.BeginForm("Add", "Cart"))
-                {
-                    <div>
-                        @Html.Hidden("productId", item.Id)
-                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                        <input type="submit" class="btn btn-success" value="Добавить"/>
-                    </div>
-                }*@
+                <div>
+                    Описание товара отсутствует
+                </div>
+            </div>
 
-                <input type="button" class="btn btn-success" value="В корзину" onclick="addToCart(@item.Id)" />
-            </td>
+            <div class="item-priceblock">
 
-        </tr>
+                <div class="item-priceblock-price">
+                    @Html.DisplayFor(modelItem => item.UnitPrice, "money")
+                </div>
+
+                <div class="item-priceblock-buybutton">
+                    <input type="button" class="btn btn-success" value="В корзину" onclick="addToCart(@item.Id)" />
+                </div>
+
+            </div>
+            
+        </li>
     }
-</table>
+</ul>
 
 
 

@@ -34,5 +34,12 @@ namespace UnitTests
 
 			Assert.AreEqual(222, cart.GetTotalAmount());
 		}
+
+
+		// TODO tests for:
+		// Remove
+		// CreateOrder
+		
+
 	}
 }

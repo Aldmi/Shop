@@ -9,7 +9,7 @@
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
+/* Override the default bootstrap behavior where horizontal item-descblockription lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
@@ -21,4 +21,61 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+/* Products */
+
+.item {
+    display: table;
+    width: 100%;
+    padding: 10px 10px 15px;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.item-imageblock {
+    display: table-cell;
+    position: relative;   
+    padding-right: 23px;
+    min-width: 180px;
+}
+
+.item-imageblock-img {
+    height: 200px;
+}
+
+.item-descblock {
+    display: table-cell;
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+    min-width: 0;
+    padding: 0 0 0 5px;
+}
+
+.item-descblock-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #363636;
+}
+
+.item-priceblock {
+    display: table-cell;
+    white-space: nowrap;
+    vertical-align: top;
+    padding: 0;
+}
+
+
+.item-priceblock-price {
+    text-align: right;
+    display: block;
+    clear: right;
+    font-size: 24px;
+}
+
+
+.item-priceblock-buybutton {
+    margin: 5px 0 5px;
+    text-align: right;
 }
