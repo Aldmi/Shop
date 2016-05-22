@@ -1,4 +1,5 @@
 ﻿@using System
+@using WebUI.Security
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +26,16 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("О нас", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+
+                    @if (Context.User.IsInRole(AdminAttribute.AdminRoleName))
+                    {
+                        <li>@Html.ActionLink("Контакты2", "Contact", "Home")</li>
+                    }
                 </ul>
     
                 @Html.Action("Summary", "Cart")
+                
+                @Html.Partial("_LoginPartial")
     
             </div>
         </div>

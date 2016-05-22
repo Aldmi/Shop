@@ -1,9 +1,11 @@
 ﻿using System.Data.Entity;
 using Domain.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
+using WebUI.Security;
 
 namespace WebUI.Models
 {
-    public class ShopContext : DbContext
+    public class ShopContext : IdentityDbContext<ShopUser>
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 

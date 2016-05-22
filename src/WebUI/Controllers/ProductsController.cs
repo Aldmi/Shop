@@ -13,14 +13,14 @@ using Domain.Entities;
 using Domain.Interfaces;
 using WebUI.Migrations;
 using WebUI.Models;
+using WebUI.Security;
 
 namespace WebUI.Controllers
 {
+    [Admin]
     public class ProductsController : Controller
     {
-
         private readonly IUnitOfWork _unitOfWork;
-
 
         public ProductsController(IUnitOfWork unitOfWork)
         {
