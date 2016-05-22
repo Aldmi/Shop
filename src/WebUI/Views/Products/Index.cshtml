@@ -6,7 +6,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     function addToCart(productId)  {
     
         $.ajax({
@@ -17,7 +17,7 @@
             $('#shopCartBtn').text('В корзину (' + data.Total + ') Руб.');
         });
     };
-</script>
+</script>*@
 
 
 <p>
@@ -54,9 +54,9 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice, "money")
                 </div>
 
-                <div class="item-priceblock-buybutton">
+                @*<div class="item-priceblock-buybutton">
                     <input type="button" class="btn btn-success" value="В корзину" onclick="addToCart(@item.Id)" />
-                </div>
+                </div>*@
 
             </div>
             

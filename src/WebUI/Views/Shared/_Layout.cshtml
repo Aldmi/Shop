@@ -20,16 +20,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Магазин", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Магазин", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("О нас", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
-
+                    
                     @if (Context.User.IsInRole(AdminAttribute.AdminRoleName))
                     {
-                        <li>@Html.ActionLink("Контакты2", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Продукты", "Index", "Products")</li>
+                        <li>@Html.ActionLink("Заказы", "Index", "Products")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Администратор", "Index", "Products")</li>
                     }
                 </ul>
     

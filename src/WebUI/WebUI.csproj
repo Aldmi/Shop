@@ -271,6 +271,7 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\Summary.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\money.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
     <None Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>

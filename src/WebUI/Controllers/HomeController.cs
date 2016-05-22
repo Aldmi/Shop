@@ -1,24 +1,60 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Domain.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PagedList;
 using WebUI.Security;
 
 namespace WebUI.Controllers
 {
 	public class HomeController : Controller
 	{
-		public ActionResult Index()
-		{
-			return View();
-		}
+        private readonly IUnitOfWork _unitOfWork;
 
-		public ActionResult About()
+	    public HomeController(IUnitOfWork unitOfWork)
+	    {
+	        _unitOfWork = unitOfWork;
+	    }
+
+
+	    // GET: Products
+        public async Task<ActionResult> Index(int? page)
+        {
+            var qProduct = await _unitOfWork.Products.Get().OrderBy(p => p.Id).ToListAsync();
+            var pageNumber = page ?? 1;
+            var onePageOfProducts = qProduct.ToPagedList(pageNumber, 2);
+
+            return View(onePageOfProducts);
+        }
+
+
+        // GET: Products/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var product = await _unitOfWork.Products.GetAsync(id.Value);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+
+
+        public ActionResult About()
 		{
 			ViewBag.Message = "Your application description page.";
 
@@ -36,6 +72,7 @@ namespace WebUI.Controllers
         [HttpGet]
 	    public ActionResult Login()
 	    {
+            //Создание и добавление нового пользователя (можно закоментить,т.к. Админ уже добавлен)-------------------------------------------------------------
             const string adminLogin = "admin";
             const string admineRole = AdminAttribute.AdminRoleName;
             const string password = "1234567";
@@ -45,7 +82,7 @@ namespace WebUI.Controllers
 
             if (userManager.FindByName(adminLogin) == null)
             {
-                var user = new ShopUser {UserName = adminLogin};
+                var user = new ShopUser { UserName = adminLogin };
                 var result = userManager.Create(user, password);
                 if (result.Succeeded)
                 {
@@ -57,8 +94,8 @@ namespace WebUI.Controllers
                     userManager.AddToRole(userManager.FindByName(adminLogin).Id, admineRole);
                 }
             }
-
-            return View();
+            //--------------------------------------------------------------------------------------------------
+            return View(); 
 	    }
 
 
