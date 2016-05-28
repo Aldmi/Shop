@@ -8,8 +8,10 @@ namespace Domain.Interfaces
 	{
 		IRepository<Product> Products { get; }
 
+        IRepository<Order> Orders { get; }
+
         // TODO: add reps
 
-		Task<int> SaveAsync();
+        Task<int> SaveAsync();
 	}
 }

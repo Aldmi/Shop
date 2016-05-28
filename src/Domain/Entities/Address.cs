@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-	class Address
+	public class Address
 	{
-		// TODO: zip-code, city, address line
-	}
+	    public string AdressLine { get; set; }
+
+        public string City { get; set; }
+
+	    public int ZipCode { get; set; }
+    }
 }

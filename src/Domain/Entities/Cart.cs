@@ -28,12 +28,29 @@ namespace Domain.Entities
 			}
 		}
 
-		// TODO: remove line
 
-		// TODO: clear all
+        public void RemoveLine(Product product, int quantity)
+        {
+            var existingLine = _lines.FirstOrDefault(line => line.Product.Id == product.Id);
+            if (existingLine != null)
+            {
+                existingLine.Quantity -= quantity;
+                existingLine.Quantity = (existingLine.Quantity > 0) ? existingLine.Quantity : 0;
+            }
+        }
 
-	
-		public decimal GetTotalAmount()
+
+        public void ClearLine(Product product)
+        {
+            var existingLine = _lines.FirstOrDefault(line => line.Product.Id == product.Id);
+            if (existingLine != null)
+            {
+                _lines.Remove(existingLine);
+            }
+        }
+
+
+        public decimal GetTotalAmount()
 		{
 			return _lines.Sum(line => line.Product.UnitPrice * line.Quantity);
 		}

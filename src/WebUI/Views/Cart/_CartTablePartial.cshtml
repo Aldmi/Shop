@@ -1,0 +1,73 @@
+﻿@using System.Linq
+@model Domain.Entities.Cart
+
+
+<script type="text/javascript">
+
+    function quantityAdd(productId) {
+        $.ajax({
+            url: "/Cart/QuantityAdd/" + productId,
+            type: "POST"
+        }).done(function (data) {
+            //alert(data.Total);
+            $('#quantity').text(data.Quantity);
+            $('#shopCartBtn').text('В корзине (' + data.Total + ') Руб.');
+        });
+    };
+
+    function quantityRemove(productId) {
+        $.ajax({
+            url: "/Cart/QuantityRemove/" + productId,
+            type: "POST"
+        }).done(function (data) {
+            $('#quantity').text(data.Quantity);
+            $('#shopCartBtn').text('В корзине (' + data.Total + ') Руб.');
+        });
+    };
+
+    function clearLine(productId) {
+        $.ajax({
+            url: "/Cart/ClearLine/" + productId,
+            type: "POST",
+            success: function (respone) {
+                alert(respone);
+                //$("#tableCart".text(respone));
+            }
+        });
+    };
+
+</script>
+
+
+
+<tbody>
+    @foreach (var line in @Model.Lines)
+    {
+        <tr>
+            <td >
+                @Html.DisplayFor(item => line.Product.Name)
+            </td>
+            <td>
+                
+                @Html.DisplayFor(item => line.Product.UnitPrice)
+            </td>
+            <td id= "quantity">  @* id="quantity" + @line.Product.Id   *@
+                @Html.DisplayFor(item => line.Quantity)
+            </td>
+
+            <td>
+                <div class="item-priceblock-buybutton">
+                    <input type="button" class="btn btn-success" value="+" onclick="quantityAdd(@line.Product.Id)" />
+                </div>
+                <div class="item-priceblock-buybutton">
+                    <input type="button" class="btn btn-success" value="-" onclick="quantityRemove(@line.Product.Id)" />
+                </div>
+                <div class="item-priceblock-buybutton">
+                    <input type="button" class="btn btn-success" value="x" onclick="clearLine(@line.Product.Id)" />
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
+
+

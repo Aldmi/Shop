@@ -6,44 +6,76 @@
 }
 
 
+<script type="text/javascript">
+    function OnSuccessCreate(data) {
+        //alert("fdsgsf");
+        var results = $('#OrderCompliteMessage'); // получаем нужный элемент
+        results.empty(); //очищаем элемент
+        results.append(data.Message); // добавляем данные в список
+    }
+</script>
+
+
 
 @if (Model == null || !Model.Lines.Any())
 {
     <div class="alert alert-info">Корзина пуста</div>
-
-    @*<div class="alert alert-success">Задача успешно завершена</div>
-        <div class="alert alert-warning">Внимание!</div>
-        <div class="alert alert-danger">Опасно!</div>*@
 }
 else
 {
     <table class="table table-bordered">
-        <tr>
-            <th>
-                Продукт
-            </th>
-            <th>
-                Цена
-            </th>
-            <th>
-                Количество
-            </th>
-        </tr>
-
-        @foreach (var line in @Model.Lines)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(item => line.Product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(item => line.Product.UnitPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(item => line.Quantity)
-                </td>
+                <th>
+                    Продукт
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Действие
+                </th>
             </tr>
-        }
+        <thead>
+
+        <tbody>
+            @Html.Partial("_CartTablePartial", Model)
+        </tbody>
     </table>
 }
+
+<br>
+@*//TODO: форму с заполненем адреса вставлять через @Ajax.ActionLink()*@
+<div id="OrderCompliteMessage">
+    @using (Ajax.BeginForm("CreateOrder", new AjaxOptions { Confirm = "Сформировать заказ ?", OnSuccess = "OnSuccessCreate" }))
+    {
+        <ul>
+            <li>
+                @Html.Label("адресс")
+                @Html.Editor("AdressLine")
+            </li>
+
+            <li>
+                @Html.Label("адресс")
+                @Html.Editor("City")
+            </li>
+
+            <li>
+                @Html.Label("ZIP коде")
+                @Html.Editor("ZipCode")
+            </li>
+        </ul>
+
+        <input type="submit" value="Заказать" class="btn btn-default" />
+    }
+</div>
+
+<br>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 

@@ -24,11 +24,23 @@ namespace Domain.Models
 			_cartService.Update(cart);
 		}
 
-		public void Remove(int productId)
+		public void Remove(int productId, int quantity)
 		{
-			// TODO
-			throw new NotImplementedException();
-		}
+            var cart = _cartService.Get();
+            var product = _unitOfWork.Products.Get(productId);
+
+            cart.RemoveLine(product, quantity);
+            _cartService.Update(cart);
+        }
+
+        public void Clear(int productId)
+        {
+            var cart = _cartService.Get();
+            var product = _unitOfWork.Products.Get(productId);
+
+            cart.ClearLine(product);
+            _cartService.Update(cart);
+        }
 
 
 	    public Order CreateOrder()
