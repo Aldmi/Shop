@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -42,12 +43,12 @@ namespace WebUI.Controllers
             var sale = new CartModel(_cartService, _unitOfWork);
             sale.Add(id, 1);
 
-            Line lineProduct = _cartService.Get().Lines.FirstOrDefault(line => line.Product.Id == id);
-            if (lineProduct != null)
+            OrderItem orderItemProduct = _cartService.Get().Lines.FirstOrDefault(line => line.Product.Id == id);
+            if (orderItemProduct != null)
             {
                 return Json(new
                 {
-                    Quantity = lineProduct.Quantity,
+                    Quantity = orderItemProduct.Quantity,
                     Total = _cartService.Get().GetTotalAmount()
                 });
             }
@@ -61,12 +62,12 @@ namespace WebUI.Controllers
             var sale = new CartModel(_cartService, _unitOfWork);
             sale.Remove(id, 1);
 
-            Line lineProduct = _cartService.Get().Lines.FirstOrDefault(line => line.Product.Id == id);
-            if (lineProduct != null)
+            OrderItem orderItemProduct = _cartService.Get().Lines.FirstOrDefault(line => line.Product.Id == id);
+            if (orderItemProduct != null)
             {
                 return Json(new
                 {
-                    Quantity = lineProduct.Quantity,
+                    Quantity = orderItemProduct.Quantity,
                     Total = _cartService.Get().GetTotalAmount(),
                     IdProd= id
                 });
@@ -89,12 +90,12 @@ namespace WebUI.Controllers
         public JsonResult CreateOrder(Address address)
         {
             var cart = _cartService.Get();
-            var order= new Order {DeliveryAddress = address, Cart = cart };
-            //_unitOfWork.Orders.Insert(order);
-            //_unitOfWork.SaveAsync();
+            var order= new Order {DeliveryAddress = address, Items = (ICollection<OrderItem>) cart.Lines };
+            _unitOfWork.Orders.Insert(order);
+            _unitOfWork.SaveAsync();
             return Json(new
             {
-                Message= "ЗАКАЗ по адерссу " + address.AdressLine + "ОФОРМЛЕН"
+                Message= "ЗАКАЗ по адерссу " + address.AdressLine + " ОФОРМЛЕН"
             });
         }
 

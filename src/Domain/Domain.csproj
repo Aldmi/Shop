@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Cart.cs" />
-    <Compile Include="Entities\Line.cs" />
+    <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

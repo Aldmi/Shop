@@ -5,9 +5,9 @@ namespace Domain.Entities
 {
 	public class Cart
 	{
-		private readonly List<Line> _lines = new List<Line>();
+		private readonly List<OrderItem> _lines = new List<OrderItem>();
 
-		public IEnumerable<Line> Lines => _lines;
+		public IEnumerable<OrderItem> Lines => _lines;
 
 	    public void AddLine(Product product, int quantity)
 		{
@@ -16,7 +16,7 @@ namespace Domain.Entities
 
 			if (existingLine == null)
 			{
-				_lines.Add(new Line
+				_lines.Add(new OrderItem
 				{
 					Product = product,
 					Quantity = quantity

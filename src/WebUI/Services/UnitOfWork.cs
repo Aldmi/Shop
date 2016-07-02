@@ -20,13 +20,12 @@ namespace WebUI.Services
 			_context = context;
 
 			Products = new Repository<Product>(context);
-
-            //Orders= new Repository<Order>(context);
+            Orders= new Repository<Order>(context);
         }
 
-		public IRepository<Product> Products { get; private set; }
+		public IRepository<Product> Products { get; }
 
-	    public IRepository<Order> Orders { get; private set; }
+	    public IRepository<Order> Orders { get; }
 
         public async Task<int> SaveAsync()
 		{

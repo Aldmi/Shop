@@ -8,7 +8,6 @@
 
 <script type="text/javascript">
     function OnSuccessCreate(data) {
-        //alert("fdsgsf");
         var results = $('#OrderCompliteMessage'); // получаем нужный элемент
         results.empty(); //очищаем элемент
         results.append(data.Message); // добавляем данные в список
@@ -59,7 +58,7 @@ else
             </li>
 
             <li>
-                @Html.Label("адресс")
+                @Html.Label("Город")
                 @Html.Editor("City")
             </li>
 

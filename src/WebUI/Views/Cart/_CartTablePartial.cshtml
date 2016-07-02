@@ -27,7 +27,7 @@
 
     function clearLine(productId) {
         $.ajax({
-            url: "/Cart/ClearLine/" + productId,
+            url: "/Cart/ClearOrderItem/" + productId,
             type: "POST",
             success: function (respone) {
                 alert(respone);
