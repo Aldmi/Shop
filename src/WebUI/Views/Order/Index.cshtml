@@ -1,0 +1,39 @@
+﻿@model  ICollection<WebUI.ViewModel.OrderViewModel>
+
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">Заказов НЕТ</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Номер заказа
+                </th>
+                <th>
+                    Адресс
+                </th>
+                <th>
+                    Детали
+                </th>
+                <th>
+                    Сумма
+                </th> 
+            </tr>
+        <thead>
+
+        <tbody>
+            @Html.Partial("_OrderTablePartial", Model)
+        </tbody>
+    </table>
+
+    <div class="item-priceblock">
+        <div class="item-priceblock-price">
+           СУММА=  @ViewBag.SumPriceOrder + руб.
+        </div>
+    </div>
+}
+

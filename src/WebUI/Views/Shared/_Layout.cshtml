@@ -27,15 +27,15 @@
                     <li>@Html.ActionLink("О нас", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                     
-                    @if (Context.User.IsInRole(AdminAttribute.AdminRoleName))
-                    {
+                    @*@if (Context.User.IsInRole(AdminAttribute.AdminRoleName))
+                    {*@
                         <li>@Html.ActionLink("Продукты", "Index", "Products")</li>
-                        <li>@Html.ActionLink("Заказы", "Index", "Products")</li>
-                    }
+                        <li>@Html.ActionLink("Заказы", "Index", "Order")</li>
+                    @*}
                     else
                     {
                         <li>@Html.ActionLink("Администратор", "Index", "Products")</li>
-                    }
+                    }*@
                 </ul>
     
                 @Html.Action("Summary", "Cart")

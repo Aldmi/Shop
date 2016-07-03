@@ -191,6 +191,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,6 +229,7 @@
     <Compile Include="Services\CartService.cs" />
     <Compile Include="Services\Repository.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\WebUIContext-20160506023437.mdf" />
@@ -285,6 +287,8 @@
     <Content Include="Views\Cart\_CartTablePartial.cshtml" />
     <None Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\_OrderTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

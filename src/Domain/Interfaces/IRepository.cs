@@ -15,6 +15,5 @@ namespace Domain.Interfaces
 		void Insert(TEntity entity);
 		void Update(TEntity entity);		
 		void Remove(TEntity entity);
-
 	}
 }

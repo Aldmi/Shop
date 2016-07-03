@@ -1,0 +1,66 @@
+﻿@model  ICollection<WebUI.ViewModel.OrderViewModel>
+
+<tbody>
+    @foreach (var order in @Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(item => order.Number)
+            </td>
+
+            <td>
+                <div>
+                    @Html.DisplayFor(item => order.DeliveryAddress.AdressLine)
+                    <br />
+                    @Html.DisplayFor(item => order.DeliveryAddress.City)
+                    <br />
+                    @Html.DisplayFor(item => order.DeliveryAddress.ZipCode)
+                    <br />
+                </div>
+            </td>
+
+            <td>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Продукт
+                        </th>
+                        <th>
+                            Количество
+                        </th>   
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach (var orderItem in order.OrderItems)
+                    {
+                        <tr>
+                            <td>
+                                <div>
+                                    @Html.DisplayFor(item => orderItem.Product.Name)
+                                </div>
+                            </td>
+
+                            <td>
+                                <div>
+                                    @Html.DisplayFor(item => orderItem.Quantity)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </td>
+
+            <td>
+                <div class="item-priceblock">
+                    <div class="item-priceblock-price">
+                        @Html.DisplayFor(item => order.TotalPrice, "money")                    
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+    }
+</tbody>
